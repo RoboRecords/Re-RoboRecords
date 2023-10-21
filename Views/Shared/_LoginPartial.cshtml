@@ -5,14 +5,18 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
+<div class="dropdown">
+    <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        @User.Identity?.Name
+    </a>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <li><a class="dropdown-item" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Manage Account</a></li>
+        // TODO: Give Logout button actual functionality. Will need to work on the Identity/Accounts area for this.
+        <li><a class="dropdown-item" asp-area="Identity" asp->Logout</a></li>
+    </ul>
+</div>
+  
 }
 else
 {
