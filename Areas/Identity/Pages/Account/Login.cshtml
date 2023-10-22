@@ -5,12 +5,14 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section>
+<div class="row justify-content-center h-100">
+    <div class="col-md-6">
+        <div class="px-5 mb-4 bg-body-tertiary border rounded-3" >
+            <div class="container-fluid py-4">
+              <h1 class="display-5 text-center fw-bold">Login</h1>
+
+               <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
@@ -23,32 +25,36 @@
                     <label asp-for="Input.Password" class="form-label">Password</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
-                        <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                <div class="checkbox my-3 d-flex flex-column  justify-content-between align-items-center">
+                    <label asp-for="Input.RememberMe" class="form-label  d-flex align-items-center w-100">
+                        <input class="form-check-input mt-0 me-2" asp-for="Input.RememberMe" />
+                        <h5 class="me-auto mb-0">@Html.DisplayNameFor(m => m.Input.RememberMe)</h5>
+                        <a class="btn btn-small btn-secondary" asp-page="./ForgotPassword">Forgot your password?</a>
+
                     </label>
+
                 </div>
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
-                </div>
             </form>
         </section>
+            <div class="d-flex justify-content-center align-items-center my-3">
+                <hr class="opacity-100 w-100">
+                <h2 class="px-2 mb-0"> OR</h2>
+                <hr class="opacity-100 w-100">
+            </div>
+            <button type="button" class="btn btn-lg btn-warning mx-auto w-100 mb-2">
+                Log in with Google (WIP)
+            </button> 
+            </div>
+          </div>
+       
     </div>
-    <div class="col-md-6 col-md-offset-2">
+    @* // TODO: Implement external auths in the future. Will go inside the same box as the login box.
+    <div class="col-md-3">
         <section>
-            <h3>Use another service to log in.</h3>
+            <h3>Log in with </h3>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
@@ -75,7 +81,7 @@
                 }
             }
         </section>
-    </div>
+    </div> *@
 </div>
 
 @section Scripts {
