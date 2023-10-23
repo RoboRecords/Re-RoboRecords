@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using ReRoboRecords.Areas.Account.Services;
 using ReRoboRecords.Areas.Account.ViewModels;
 
 namespace ReRoboRecords.Areas.Account.Controllers;
@@ -10,12 +12,32 @@ namespace ReRoboRecords.Areas.Account.Controllers;
 public class AccountController : Controller
 {
     private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly ILogger<LoginViewModel> _logger;
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly IUserStore<IdentityUser> _userStore;
+    private readonly IUserEmailStore<IdentityUser> _emailStore;
+    private readonly IEmailSender _emailSender;
+    private readonly ILogger<LoginViewModel> _loginLogger;
+    private readonly ILogger<RegisterViewModel> _registerLogger;
+    private readonly AccountService _accountService;
 
-    public AccountController(SignInManager<IdentityUser> signInManager, ILogger<LoginViewModel> logger)
+
+
+    public AccountController( UserManager<IdentityUser> userManager,
+        IUserStore<IdentityUser> userStore,
+        SignInManager<IdentityUser> signInManager,
+        ILogger<LoginViewModel> loginLogger,
+        ILogger<RegisterViewModel> registerLogger,
+        IEmailSender emailSender,
+        AccountService accountService)
     {
+        _accountService = accountService;
+        _userManager = userManager;
+        _userStore = userStore;
+        _emailStore = accountService.GetEmailStore(_userManager,_userStore);
         _signInManager = signInManager;
-        _logger = logger;
+        _registerLogger = registerLogger;
+        _loginLogger = loginLogger;
+        _emailSender = emailSender;
     }
 
     public IActionResult Index()
@@ -24,18 +46,17 @@ public class AccountController : Controller
         return View();
     }
     [HttpGet]
-    public IActionResult Login(string? returnUrl = null)
+    public async Task<IActionResult> Login(string? returnUrl = null)
     {
         
         returnUrl ??= Url.Content("~/");
 
         // Clear the existing external cookie to ensure a clean login process
-        HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
         
-        var externalAuthSchemes = HttpContext.RequestServices.GetRequiredService<IAuthenticationSchemeProvider>().GetAllSchemesAsync();
         var viewModel = new LoginViewModel
         {
-            ExternalLogins = externalAuthSchemes.Result.ToList(),
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList(),
             ReturnUrl = returnUrl
         };
         
@@ -51,19 +72,19 @@ public class AccountController : Controller
         
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginViewModel.Input.Username, loginViewModel.Input.Password, loginViewModel.Input.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(loginViewModel.LoginInput.Username, loginViewModel.LoginInput.Password, loginViewModel.LoginInput.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                _logger.LogInformation("User logged in.");
+                _loginLogger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
             if (result.RequiresTwoFactor)
             {
-                return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = loginViewModel.Input.RememberMe });
+                return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = loginViewModel.LoginInput.RememberMe });
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning("User account locked out.");
+                _loginLogger.LogWarning("User account locked out.");
                 return RedirectToPage("./Lockout");
             }
             else
@@ -77,11 +98,22 @@ public class AccountController : Controller
         return View(loginViewModel);
 
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Register(string returnUrl = null)
+    {
+        var model = new RegisterViewModel
+        {
+            ReturnUrl = returnUrl,
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
+        };
+        return View(model);
+    }
     
     public async Task<IActionResult> Logout(string returnUrl = null)
     {
         await _signInManager.SignOutAsync();
-        _logger.LogInformation("User logged out.");
+        _loginLogger.LogInformation("User logged out.");
         if (returnUrl != null)
         {
             return LocalRedirect(returnUrl);

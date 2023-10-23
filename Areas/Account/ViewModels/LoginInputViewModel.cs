@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ReRoboRecords.Areas.Account.ViewModels;
 
-public class InputViewModel
+public class LoginInputViewModel
 {
     [Required]
     [Display(Name = "Username")]

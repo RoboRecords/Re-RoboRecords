@@ -15,19 +15,19 @@
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="Gamer" />
-                    <label asp-for="Input.Username" class="form-label">Username</label>
-                    <span asp-validation-for="Input.Username" class="text-danger"></span>
+                    <input asp-for="LoginInput.Username" class="form-control" autocomplete="username" aria-required="true" placeholder="Gamer" />
+                    <label asp-for="LoginInput.Username" class="form-label">Username</label>
+                    <span asp-validation-for="LoginInput.Username" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                    <label asp-for="Input.Password" class="form-label">Password</label>
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    <input asp-for="LoginInput.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label asp-for="LoginInput.Password" class="form-label">Password</label>
+                    <span asp-validation-for="LoginInput.Password" class="text-danger"></span>
                 </div>
                 <div class="checkbox my-3 d-flex flex-column  justify-content-between align-items-center">
-                    <label asp-for="Input.RememberMe" class="form-label  d-flex align-items-center w-100">
-                        <input class="form-check-input mt-0 me-2" asp-for="Input.RememberMe" />
-                        <h5 class="me-auto mb-0">@Html.DisplayNameFor(m => m.Input.RememberMe)</h5>
+                    <label asp-for="LoginInput.RememberMe" class="form-label  d-flex align-items-center w-100">
+                        <input class="form-check-input mt-0 me-2" asp-for="LoginInput.RememberMe" />
+                        <h5 class="me-auto mb-0">@Html.DisplayNameFor(m => m.LoginInput.RememberMe)</h5>
                         <a class="btn btn-small btn-secondary">Forgot your password?</a>
                         <!-- TODO: Add back this functionality of forgot pass -->
                     </label>

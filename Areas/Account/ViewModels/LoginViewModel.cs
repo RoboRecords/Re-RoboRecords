@@ -6,7 +6,7 @@ namespace ReRoboRecords.Areas.Account.ViewModels;
 public class LoginViewModel
 {
     [BindProperty]
-    public InputViewModel Input { get; set; }
+    public LoginInputViewModel LoginInput { get; set; }
     public IList<AuthenticationScheme>? ExternalLogins { get; set; }
     public string? ReturnUrl { get; set; }
     [TempData]

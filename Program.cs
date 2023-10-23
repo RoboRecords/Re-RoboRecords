@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ReRoboRecords.Areas.Account.Services;
 using ReRoboRecords.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<AccountService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
