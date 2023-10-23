@@ -13,7 +13,9 @@
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
-                    <a class="dropdown-item" class="nav-link" asp-controller="Account" title="Manage">Manage Account</a></li>
+                    <!-- TODO: This should link to the user's profile page later on. -->
+                    <a class="dropdown-item" class="nav-link" asp-controller="Account" title="My Profile">My Profile</a>
+                </li>
                 <li>
                     <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                         <button type="submit" class="dropdown-item">Logout</button>
@@ -26,7 +28,7 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link" asp-area="Account"  asp-controller="Account" asp-action="Login">Register</a>
+            <a class="nav-link" asp-area="Account"  asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Register</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-area="Account"  asp-controller="Account" asp-action="Login">Login</a>

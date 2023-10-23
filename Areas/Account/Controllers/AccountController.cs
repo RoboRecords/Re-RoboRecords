@@ -1,7 +1,11 @@
+using System.Text;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using ReRoboRecords.Areas.Account.Services;
 using ReRoboRecords.Areas.Account.ViewModels;
 
@@ -21,8 +25,7 @@ public class AccountController : Controller
     private readonly AccountService _accountService;
 
 
-
-    public AccountController( UserManager<IdentityUser> userManager,
+    public AccountController(UserManager<IdentityUser> userManager,
         IUserStore<IdentityUser> userStore,
         SignInManager<IdentityUser> signInManager,
         ILogger<LoginViewModel> loginLogger,
@@ -33,55 +36,54 @@ public class AccountController : Controller
         _accountService = accountService;
         _userManager = userManager;
         _userStore = userStore;
-        _emailStore = accountService.GetEmailStore(_userManager,_userStore);
+        _emailStore = accountService.GetEmailStore(_userManager, _userStore);
         _signInManager = signInManager;
         _registerLogger = registerLogger;
         _loginLogger = loginLogger;
         _emailSender = emailSender;
     }
 
-    public IActionResult Index()
-    {
-        // This will be the manage account view most likely.
-        return View();
-    }
     [HttpGet]
     public async Task<IActionResult> Login(string? returnUrl = null)
     {
-        
         returnUrl ??= Url.Content("~/");
 
         // Clear the existing external cookie to ensure a clean login process
         await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-        
+
         var viewModel = new LoginViewModel
         {
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList(),
             ReturnUrl = returnUrl
         };
-        
+
         return View(viewModel);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel loginViewModel, string returnUrl = null)
+    public async Task<IActionResult> Login(LoginViewModel loginViewModel, string? returnUrl = null)
     {
         returnUrl ??= Url.Content("~/");
-        var externalAuthSchemes = HttpContext.RequestServices.GetRequiredService<IAuthenticationSchemeProvider>().GetAllSchemesAsync();
+        var externalAuthSchemes = HttpContext.RequestServices.GetRequiredService<IAuthenticationSchemeProvider>()
+            .GetAllSchemesAsync();
         loginViewModel.ExternalLogins = externalAuthSchemes.Result.ToList();
-        
+
         if (ModelState.IsValid)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginViewModel.LoginInput.Username, loginViewModel.LoginInput.Password, loginViewModel.LoginInput.RememberMe, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(loginViewModel.LoginInput.Username,
+                loginViewModel.LoginInput.Password, loginViewModel.LoginInput.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 _loginLogger.LogInformation("User logged in.");
                 return LocalRedirect(returnUrl);
             }
+
             if (result.RequiresTwoFactor)
             {
-                return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = loginViewModel.LoginInput.RememberMe });
+                return RedirectToPage("./LoginWith2fa",
+                    new { ReturnUrl = returnUrl, RememberMe = loginViewModel.LoginInput.RememberMe });
             }
+
             if (result.IsLockedOut)
             {
                 _loginLogger.LogWarning("User account locked out.");
@@ -96,20 +98,104 @@ public class AccountController : Controller
 
         // If we get this far, nothing failed, so we can return the view.
         return View(loginViewModel);
-
     }
 
     [HttpGet]
-    public async Task<IActionResult> Register(string returnUrl = null)
+    public async Task<IActionResult> Register(string? returnUrl = null)
     {
-        var model = new RegisterViewModel
+        var viewModel = new RegisterViewModel
         {
             ReturnUrl = returnUrl,
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList()
         };
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterViewModel model, string? returnUrl = null)
+    {
+        returnUrl ??= Url.Content("~/");
+        model.ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        if (ModelState.IsValid)
+        {
+            var user = _accountService.CreateUser();
+
+            await _userStore.SetUserNameAsync(user, model.Input.Username, CancellationToken.None);
+            await _emailStore.SetEmailAsync(user, model.Input.Email, CancellationToken.None);
+            var result = await _userManager.CreateAsync(user, model.Input.Password);
+
+            if (result.Succeeded)
+            {
+                _registerLogger.LogInformation("User created a new account with password.");
+
+                var userId = await _userManager.GetUserIdAsync(user);
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                var callbackUrl = Url.Action(
+                    "ConfirmEmail", "Account",
+                    new
+                    {
+                        userId,
+                        code,
+                        returnUrl
+                    });
+;
+
+                await _emailSender.SendEmailAsync(model.Input.Email, "Confirm your email",
+                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                {
+                    return View("RegisterConfirmation",
+                        new RegisterConfirmationViewModel
+                        {
+                            Email = model.Input.Email,
+                            DisplayConfirmAccountLink = true,
+                            EmailConfirmationUrl = callbackUrl
+                        });
+                }
+                else
+                {
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+
+        // If we got this far, something failed, redisplay form
         return View(model);
     }
-    
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<IActionResult> ConfirmEmail(string userId, string code, string? returnUrl = null)
+    {
+        returnUrl ??= Url.Content("~/");
+        if (userId == null || code == null)
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound($"Unable to load user with ID '{userId}'.");
+        }
+
+        code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+        var result = await _userManager.ConfirmEmailAsync(user, code);
+        if (!result.Succeeded)
+        {
+            throw new InvalidOperationException($"Error confirming email for user with ID '{userId}':");
+        }
+
+        return View();
+    }
+
     public async Task<IActionResult> Logout(string returnUrl = null)
     {
         await _signInManager.SignOutAsync();
@@ -125,5 +211,4 @@ public class AccountController : Controller
             return RedirectToPage("~/");
         }
     }
-    
 }

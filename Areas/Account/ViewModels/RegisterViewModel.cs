@@ -9,8 +9,8 @@ public class RegisterViewModel
 {
     [BindProperty]
     public RegisterInputViewModel Input { get; set; }
-    public string ReturnUrl { get; set; }
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
+    public string? ReturnUrl { get; set; }
+    public IList<AuthenticationScheme>? ExternalLogins { get; set; }
     
     
 }

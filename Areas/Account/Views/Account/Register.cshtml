@@ -10,7 +10,7 @@
             <div class="container-fluid py-4">
                 <h1 class="display-5 text-center fw-bold">Register</h1>
 
-                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <form id="registerForm" asp-action="Register" method="post">
                    <hr/>
                     <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                     <div class="form-floating mb-3">
