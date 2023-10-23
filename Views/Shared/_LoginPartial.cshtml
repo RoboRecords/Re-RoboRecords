@@ -13,9 +13,9 @@
 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
-                    <a class="dropdown-item" class="nav-link" asp-area="Account" asp-controller="Account" title="Manage">Manage Account</a></li>
+                    <a class="dropdown-item" class="nav-link" asp-controller="Account" title="Manage">Manage Account</a></li>
                 <li>
-                    <form class="form-inline" asp-area="Account" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <form class="form-inline" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                         <button type="submit" class="dropdown-item">Logout</button>
                     </form>
                 </li>

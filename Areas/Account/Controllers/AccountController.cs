@@ -72,16 +72,26 @@ public class AccountController : Controller
                 return View(loginViewModel);
             }
         }
-        else
-        {
-            var errors = ModelState
-                .Where(x => x.Value.Errors.Count > 0)
-                .Select(x => new { x.Key, x.Value.Errors })
-                .ToArray();
-        }
 
+        // If we get this far, nothing failed, so we can return the view.
         return View(loginViewModel);
 
+    }
+    
+    public async Task<IActionResult> Logout(string returnUrl = null)
+    {
+        await _signInManager.SignOutAsync();
+        _logger.LogInformation("User logged out.");
+        if (returnUrl != null)
+        {
+            return LocalRedirect(returnUrl);
+        }
+        else
+        {
+            // This needs to be a redirect so that the browser performs a new
+            // request and the identity for the user gets updated.
+            return RedirectToPage("~/");
+        }
     }
     
 }
