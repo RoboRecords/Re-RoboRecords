@@ -7,7 +7,9 @@ public class LoginViewModel
 {
     [BindProperty]
     public InputViewModel Input { get; set; }
-    public IList<AuthenticationScheme> ExternalLogins { get; set; }
-    public string ReturnUrl { get; set; }
+    public IList<AuthenticationScheme>? ExternalLogins { get; set; }
+    public string? ReturnUrl { get; set; }
+    [TempData]
+    public string? ErrorMessage { get; set; }
 
 }
