@@ -5,8 +5,8 @@ namespace ReRoboRecords.Areas.Account.ViewModels;
 public class LoginInputViewModel
 {
     [Required]
-    [Display(Name = "Username")]
-    public string Username { get; set; }
+    [Display(Name = "Username / Email address")]
+    public string UsernameOrEmail { get; set; }
 
     [Required]
     [DataType(DataType.Password)]
