@@ -2,6 +2,20 @@
     ViewData["Title"] = "Games";
 }
 
-<div>
-    <h1>WIP</h1>
+<div class="bg-body-tertiary p-3 border rounded">
+    <div class="row gy-5 py-3">
+        @for (int i = 0; i < 12; i++)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <a href="#" class="link-underline-opacity-0">
+                    <div class="card border-info">
+                        <img src="~/imgs/index/gfz1.png" class="card-img-top">
+                        <div class="card-body">
+                            <p class="card-text">Sonic Robo Blast 2 Vanilla</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
 </div>
