@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
@@ -68,35 +69,53 @@ public class AccountController : Controller
             .GetAllSchemesAsync();
         loginViewModel.ExternalLogins = externalAuthSchemes.Result.ToList();
 
-        if (ModelState.IsValid)
+        // If somehow the model is invalid, return the same page
+        if (!ModelState.IsValid) 
+            return View(loginViewModel);
+        
+        IdentityUser? user;
+            
+        if (MailAddress.TryCreate(loginViewModel.LoginInput.UsernameOrEmail, out var emailAddress))
         {
-            var result = await _signInManager.PasswordSignInAsync(loginViewModel.LoginInput.Username,
-                loginViewModel.LoginInput.Password, loginViewModel.LoginInput.RememberMe, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                _loginLogger.LogInformation("User logged in.");
-                return LocalRedirect(returnUrl);
-            }
+            user = await _emailStore.FindByEmailAsync(emailAddress.Address, CancellationToken.None);
 
-            if (result.RequiresTwoFactor)
+            if (user is null)
             {
-                return RedirectToPage("./LoginWith2fa",
-                    new { ReturnUrl = returnUrl, RememberMe = loginViewModel.LoginInput.RememberMe });
+                ModelState.AddModelError(string.Empty, "No user found with that email address.");
+                return View(loginViewModel);
             }
-
-            if (result.IsLockedOut)
+        }
+        else
+        {
+            user = await _userManager.FindByNameAsync(loginViewModel.LoginInput.UsernameOrEmail);
+                
+            if (user is null)
             {
-                _loginLogger.LogWarning("User account locked out.");
-                return RedirectToPage("./Lockout");
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, "No user found with that username");
                 return View(loginViewModel);
             }
         }
 
-        // If we get this far, nothing failed, so we can return the view.
+        var result = await _signInManager.PasswordSignInAsync(user, loginViewModel.LoginInput.Password,
+            loginViewModel.LoginInput.RememberMe, lockoutOnFailure: false);
+            
+        if (result.Succeeded)
+        {
+            _loginLogger.LogInformation("User logged in.");
+            return LocalRedirect(returnUrl);
+        }
+        if (result.RequiresTwoFactor)
+        {
+            return RedirectToPage("./LoginWith2fa",
+                new { ReturnUrl = returnUrl, loginViewModel.LoginInput.RememberMe });
+        }
+        if (result.IsLockedOut)
+        {
+            _loginLogger.LogWarning("User account locked out.");
+            return RedirectToPage("./Lockout");
+        }
+        
+        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         return View(loginViewModel);
     }
 
