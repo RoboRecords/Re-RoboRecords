@@ -80,21 +80,24 @@
         <!-- Games Grid -->
         <div class="col-12 col-lg-8">
             <div class="bg-body-tertiary h-100 p-3 border rounded">
-                <div class="row gy-5 py-3">
-                    @for (int i = 0; i < 6; i++)
-                    {
-                        <div class="game-entry col-sm-6 col-md-4 animate__animated animate__fadeIn">
-                            <a href="#" class="text-decoration-none">
-                                <div class="card border-3 p-2">
-                                    <img src="~/imgs/demo-images/game@(rnd.Next(1, 5)).png" class="img-thumbnail border-white">
-                                    <div class="card-body">
-                                        <h5 class="card-text text-center">Sonic Robo Blast 2 Vanilla</h5>
-                                        <p class="mb-0">@rnd.Next(10) runs</p>
+                <h2 class="text-center display-2 my-2 ">Games</h2>
+                <div class="d-flex align-items-center">
+                    <div class="row gy-2 gx-2">
+                        @for (int i = 0; i < 6; i++)
+                        {
+                            <div class="game-entry col-sm-6 col-md-4 animate__animated animate__fadeIn">
+                                <a href="#" class="text-decoration-none">
+                                    <div class="card border-3 p-2">
+                                        <img src="~/imgs/demo-images/game@(rnd.Next(1, 5)).png" class="img-thumbnail border-white" style="height:154px;">
+                                        <div class="card-body">
+                                            <h5 class="card-text text-center">Sonic Robo Blast 2 Vanilla</h5>
+                                            <p class="mb-0">@rnd.Next(10) runs</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                    }
+                                </a>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
