@@ -4,22 +4,75 @@
     Random rnd = new Random();
 }
 
-<div class="bg-body-tertiary p-3 border rounded">
-    <div class="row gy-5 py-3">
-        @for (int i = 0; i < 12; i++)
-        {
-            <div class="game-entry  col-sm-6 col-md-4 col-lg-3 animate__animated animate__fadeIn">
-                <a href="#" class="text-decoration-none">
-                    <div class="card border-3 p-2">
-                        <img src="~/imgs/index/gfz@(rnd.Next(1,3)).png" class="img-thumbnail border-white">
-                        <div class="card-body">
-                            <h5 class="card-text text-center">Sonic Robo Blast 2 Vanilla</h5>
-                            <p class="mb-0">@rnd.Next(10) runs</p>
-                        </div>
+<div class="container">
+    <div class="row">
+        <!-- Search Sidebar -->
+        <div class="col-12 col-md-3 border-end">
+            <div class="bg-body-tertiary rounded border p-3">
+                <div class="mb-5">
+                <form>
+                    <input type="text" class="form-control mb-2" placeholder="Game Name">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </form>
+                </div>
+                <h5 class="text-center">Sort Options</h5>
+                <hr/>
+                <div class="mb-2">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortOptions" id="mostRuns" value="mostRuns" checked>
+                        <label class="form-check-label" for="mostRuns">
+                            Most Runs
+                        </label>
                     </div>
-                </a>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortOptions" id="leastRuns" value="leastRuns">
+                        <label class="form-check-label" for="leastRuns">
+                            Least Runs
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortOptions" id="newest" value="newest">
+                        <label class="form-check-label" for="newest">
+                            Newest Released
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortOptions" id="oldest" value="oldest">
+                        <label class="form-check-label" for="oldest">
+                            Oldest Released
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortOptions" id="random" value="random">
+                        <label class="form-check-label" for="random">
+                            Random
+                        </label>
+                    </div>
+                </div>
             </div>
-        }
+        </div>
+
+        <!-- Games Grid -->
+        <div class="col-12 col-md-9">
+            <div class="bg-body-tertiary p-3 border rounded">
+                <div class="row gy-5 py-3">
+                    @for (int i = 0; i < 6; i++)
+                    {
+                        <div class="game-entry col-sm-6 col-md-4 animate__animated animate__fadeIn">
+                            <a href="#" class="text-decoration-none">
+                                <div class="card border-3 p-2">
+                                    <img src="~/imgs/index/gfz@(rnd.Next(1,3)).png" class="img-thumbnail border-white">
+                                    <div class="card-body">
+                                        <h5 class="card-text text-center">Sonic Robo Blast 2 Vanilla</h5>
+                                        <p class="mb-0">@rnd.Next(10) runs</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
