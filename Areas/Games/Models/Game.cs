@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ReRoboRecords.Areas.Games.Models
 {
-    public class GameModel
+    public class Game
     {
         /// <summary>
         /// Id of the Game.
@@ -37,7 +37,7 @@ namespace ReRoboRecords.Areas.Games.Models
         /// <summary>
         /// Categories of the game.
         /// </summary>
-        public List<CategoryModel> Categories { get; set; }
+        public List<Category> Categories { get; set; }
 
     }
 }

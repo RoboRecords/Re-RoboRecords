@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace ReRoboRecords.Areas.Games.Controllers
 {
     [Area("Games")]
-    [Route("[area]")] // Sets route as the area name. In this case, /Games.
+    [Route("[area]/[action]")] // Sets route as the area name. In this case, /Games.
     public class GamesController : Controller
     {
         private readonly ILogger<GamesController> _logger;
@@ -18,19 +18,24 @@ namespace ReRoboRecords.Areas.Games.Controllers
         {
             _logger = logger;
         }
+    
         /// <summary>
-        /// Returns the index view for the Games area.
+        /// Returns the view for the Games Index page.
         /// </summary>
+        [Route("~/[area]")]
         public IActionResult Index()
         {
-            return View();
+            return View(); // Returns the Index view.   
         }
-
         
-        // [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        // public IActionResult Error()
-        // {
-        //     return View("Error!");
-        // }
+        
+        /// <summary>
+        /// Returns the view for the New Game page.
+        /// </summary>
+        [HttpGet]
+        public IActionResult New()
+        {
+            return View(); // Returns the New view.
+        }
     }
 }

@@ -2,23 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ReRoboRecords.Areas.Games.Models;
 
 namespace ReRoboRecords.Areas.Games.Models
 {
-    public class RulesModel
+    public class Category
     {
         /// <summary>
-        /// Id of the rules.
+        /// Id of the category.
         /// </summary>
         public int Id { get; set; }
         /// <summary>
-        /// Description of the rules.
+        /// Name of the category.
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// Description of the category.
         /// </summary>
         public string Description { get; set; }
         /// <summary>
-        /// Category that the rules belong to.
+        /// Rules object of the category. 
         /// </summary>
-        public CategoryModel Category { get; set; }   
+        public Rules Rules { get; set;}
+        
     }
 }

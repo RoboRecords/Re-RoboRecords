@@ -215,7 +215,7 @@ public class AccountController : Controller
         return View();
     }
 
-    public async Task<IActionResult> Logout(string returnUrl = null)
+    public async Task<IActionResult> Logout(string? returnUrl = null)
     {
         await _signInManager.SignOutAsync();
         _loginLogger.LogInformation("User logged out.");

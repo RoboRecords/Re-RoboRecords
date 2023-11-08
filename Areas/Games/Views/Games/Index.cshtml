@@ -6,7 +6,6 @@
 
 <div class="container">
     <div class="row">
-
         <!-- Search Sidebar -->
         <div class="col-12 col-lg-4 border-end">
             <div class="bg-body-tertiary rounded h-100 border p-3">
@@ -77,18 +76,20 @@
             </div>
         </div>
 
-        <!-- Games Grid -->
+        <!-- Games Column -->
         <div class="col-12 mt-2 mt-lg-0 col-lg-8">
             <div class="bg-body-tertiary h-100 p-3 border rounded">
+                <!-- New Game / TODO: Make this only selectable by administrators. --> 
                 <div class="d-flex align-items-center justify-content-center position-relative">
                     <h2 class="text-center display-2">Games</h2>
                     <div class="position-absolute top-50 end-0 translate-middle-y">
-                        <a href="#" class="btn btn-lg btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addGameModal">
+                        <a href="@Url.Action("New","Games")" class="btn btn-lg btn-primary d-flex align-items-center">
                             <p class="mb-0">Add Game</p>
                             <i class="bi bi-plus-circle ms-2"></i>
                         </a>
                     </div>
                 </div>
+                <!-- Main Grid -->
                 <div class="d-flex align-items-center">
                     <div class="row gy-2 gx-2">
                         @for (int i = 0; i < 6; i++)
