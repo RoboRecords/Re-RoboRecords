@@ -20,6 +20,11 @@ namespace ReRoboRecords.Areas.Games.Models
         public string Title { get; set; }
         
         /// <summary>
+        /// Path of the image for the game.
+        /// </summary>
+        public string? GameImagePath { get; set; }
+        
+        /// <summary>
         /// Description of the Game.
         /// </summary>
         public string Description { get; set;}

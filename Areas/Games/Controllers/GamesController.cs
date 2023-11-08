@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ReRoboRecords.Areas.Games.Data;
+using ReRoboRecords.Areas.Games.Models;
+using ReRoboRecords.Areas.Games.ViewModels;
 
 namespace ReRoboRecords.Areas.Games.Controllers
 {
@@ -13,10 +16,14 @@ namespace ReRoboRecords.Areas.Games.Controllers
     public class GamesController : Controller
     {
         private readonly ILogger<GamesController> _logger;
+        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IGameRepository _gameRepository;
 
-        public GamesController(ILogger<GamesController> logger)
+        public GamesController(ILogger<GamesController> logger, IWebHostEnvironment hostingEnvironment, IGameRepository gameRepository)
         {
             _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
+            _gameRepository = gameRepository;
         }
     
         /// <summary>
@@ -36,6 +43,42 @@ namespace ReRoboRecords.Areas.Games.Controllers
         public IActionResult New()
         {
             return View(); // Returns the New view.
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> New(NewGameViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string imagePath = null;
+                if (model.GameImage is { Length: > 0 })
+                {
+                    var fileName = Guid.NewGuid() + "-" + model.GameImage.FileName;
+                    var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", fileName);
+                    
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await model.GameImage.CopyToAsync(stream);
+                    }
+
+                    imagePath = filePath;
+                }
+
+                var game = new Game
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    ReleaseDate = model.ReleaseDate,
+                    GameImagePath = imagePath
+                };
+                
+                await _gameRepository.AddGameAsync(game);
+                
+                return View("Index"); // Goes back to index view if successful.
+
+            }
+
+            return View(model);
         }
     }
 }

@@ -10,7 +10,7 @@ public class NewGameViewModel
     /// </summary>
     [Required]
     [Display (Name = "Game Name")]
-    public string Name { get; set; }
+    public string Title { get; set; }
         
     /// <summary>
     /// Description of the Game.

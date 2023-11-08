@@ -42,4 +42,9 @@
     <_ContentIncludedByDefault Remove="Areas\Identity\Views\_ViewStart.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Games\Services\" />
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>
