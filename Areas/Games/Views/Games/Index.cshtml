@@ -80,7 +80,15 @@
         <!-- Games Grid -->
         <div class="col-12 mt-2 mt-lg-0 col-lg-8">
             <div class="bg-body-tertiary h-100 p-3 border rounded">
-                <h2 class="text-center display-2 my-2 ">Games</h2>
+                <div class="d-flex align-items-center justify-content-center position-relative">
+                    <h2 class="text-center display-2">Games</h2>
+                    <div class="position-absolute top-50 end-0 translate-middle-y">
+                        <a href="#" class="btn btn-lg btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addGameModal">
+                            <p class="mb-0">Add Game</p>
+                            <i class="bi bi-plus-circle ms-2"></i>
+                        </a>
+                    </div>
+                </div>
                 <div class="d-flex align-items-center">
                     <div class="row gy-2 gx-2">
                         @for (int i = 0; i < 6; i++)
@@ -105,15 +113,21 @@
                             <li class="page-item disabled">
                                 <a class="page-link" href="#" tabindex="-1">Previous</a>
                             </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">3</a>
+                            </li>
                             <li class="page-item">
                                 <a class="page-link" href="#">Next</a>
                             </li>
                         </ul>
                     </nav>
-                    </div>
+                </div>
             </div>
         </div>
     </div>
