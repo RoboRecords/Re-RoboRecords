@@ -5,14 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace ReRoboRecords.Areas.Games.Models
+namespace ReRoboRecords.Areas.Runs.Models
 {
-    public class RunModel
+    public class Run
     {
         /// <summary>
         /// Id of the run.
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid RunId { get; set; }
         /// <summary>
         /// Id of the IdentityUser who submitted.
         /// </summary>

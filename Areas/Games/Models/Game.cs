@@ -11,13 +11,13 @@ namespace ReRoboRecords.Areas.Games.Models
         /// <summary>
         /// Id of the Game.
         /// </summary>
-        public int Id { get; set; }
+        public int GameId { get; set; }
         
         /// <summary>
         /// Name of the Game.
         /// </summary>
         [Required]
-        public string Name { get; set; }
+        public string Title { get; set; }
         
         /// <summary>
         /// Description of the Game.

@@ -10,7 +10,7 @@ namespace ReRoboRecords.Areas.Games.Models
         /// <summary>
         /// Id of the category.
         /// </summary>
-        public int Id { get; set; }
+        public int CategoryId { get; set; }
         /// <summary>
         /// Name of the category.
         /// </summary>
@@ -19,10 +19,7 @@ namespace ReRoboRecords.Areas.Games.Models
         /// Description of the category.
         /// </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Rules object of the category. 
-        /// </summary>
-        public Rules Rules { get; set;}
+
         
     }
 }
