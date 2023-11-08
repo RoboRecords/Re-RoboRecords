@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using ReRoboRecords.Areas.Games.Models;
 
 namespace ReRoboRecords.Areas.Games.ViewModels;
@@ -5,29 +6,36 @@ namespace ReRoboRecords.Areas.Games.ViewModels;
 public class NewGameViewModel
 {
     /// <summary>
-    /// Id of the Game.
-    /// </summary>
-    public int Id { get; set; }
-        
-    /// <summary>
     /// Name of the Game.
     /// </summary>
-    public string? Name { get; set; }
+    [Required]
+    [Display (Name = "Game Name")]
+    public string Name { get; set; }
         
     /// <summary>
     /// Description of the Game.
     /// </summary>
+    [Required]
     public string? Description { get; set;}
         
     /// <summary>
     /// Release date of the Game.
     /// </summary>
+    [Required]
     public string? ReleaseDate { get; set; }
-        
+    
     /// <summary>
-    /// Privacy state. If private, should be hidden to non-admins.
+    /// Image of the game.
     /// </summary>
-    public bool IsPrivate { get; set; }
+    public IFormFile? GameImage { get; set; }
+    
+    /// <summary>
+    /// Version of the game.
+    /// </summary>
+    [Required]
+    [Display(Name = "Version")]
+    public string GameVersion { get; set; }
+    
         
     /// <summary>
     /// Categories of the game.
