@@ -54,6 +54,13 @@ namespace ReRoboRecords.Areas.Games.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Check if the game name already exists
+                if (_gameRepository.GetAllGamesAsync().Result.Any(g => g.Title == model.Title))
+                {
+                    ModelState.AddModelError("Name", "A game with this name already exists.");
+                    return View(model);
+                }
+                
                 string imagePath = null;
                 if (model.GameImage is { Length: > 0 })
                 {

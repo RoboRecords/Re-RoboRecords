@@ -9,6 +9,7 @@ public class NewGameViewModel
     /// Name of the Game.
     /// </summary>
     [Required]
+    [MaxLength(255)]
     [Display (Name = "Game Name")]
     public string Title { get; set; }
         
