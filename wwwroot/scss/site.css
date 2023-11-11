@@ -1,31 +1,39 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
 body {
   font-family: "Inter", Ubuntu, sans-serif;
-  background-color: #0D0F1A;
-  color: #E6E6E6;
+  background-color: #0c0703;
+  color: #fcf7f3;
   margin: 0;
   padding: 0;
 }
 
 .bg-footer {
-  background-color: #6C7BBA;
-}
-
-.btn-primary {
-  background-color: #5372F0;
-  border: none;
-}
-.btn-primary:hover {
-  background-color: #244cec;
+  background-color: #1c1107;
 }
 
 .btn-outline-light {
-  border-color: #6C7BBA;
-  color: #6C7BBA;
+  border-color: #1c1107;
+  color: #fcf7f3;
 }
 .btn-outline-light:hover {
-  background-color: #6C7BBA;
-  color: #0D0F1A;
+  background-color: #627484;
+  color: #fcf7f3;
+}
+
+.bg-custom {
+  background-color: #0c0703;
+}
+
+.bg-primary-custom {
+  background-color: #65a0d7;
+}
+
+.bg-secondary-custom {
+  background-color: #1c1107;
+}
+
+.bg-accent-custom {
+  background-color: #627484;
 }
 
 /*# sourceMappingURL=site.css.map */

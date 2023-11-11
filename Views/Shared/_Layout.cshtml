@@ -17,8 +17,8 @@
         <nav class="navbar navbar-expand-lg bg-gradient border-bottom">
             <div class="container">
                 <!-- Brand/logo -->
-                <a class="navbar-brand align-items-center d-flex fs-3" asp-area="" asp-controller="Home" asp-action="Index">
-                    <img src="imgs/icons/time-emblem.png" alt="Logo" class="me-1">
+                <a class="navbar-brand align-items-center d-flex fs-3" href="@Url.Action("Index","Home" )">
+                    <img src="~/imgs/icons/time-emblem.png" alt="Logo" class="me-1">
                     RoboRecords
                 </a>
 
@@ -65,7 +65,7 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid h-100 d-flex align-items-center">
+    <div class="container-fluid  h-100 d-flex align-items-center">
         <div class="container-lg py-5 my-2">
             @RenderBody()
         </div>
