@@ -40,10 +40,13 @@
     <_ContentIncludedByDefault Remove="Areas\Identity\Views\Shared\_ValidationScriptsPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Views\_ViewImports.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Identity\Views\_ViewStart.cshtml" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\site.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\site.css.map" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Games\Services\" />
+    <Folder Include="Areas\Home\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

@@ -2,161 +2,40 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="row g-2">
-    <!-- Main Jumbotron -->
-    <div class="col-sm-12">
-        <div class="h-100 p-5 bg-body-tertiary border rounded-3">
-            <div class="container-fluid py-5">
-                @if (!User.Identity.IsAuthenticated)
-                {
-                    <h1 class="display-5 text-center fw-bold">RoboRecords</h1>
-                    <h3 class="display-6 text-center mb-4">For the People, For the Future.</h3>
-                    <h4 class="text-center fw-normal">Welcome to RoboRecords! Here you can upload your .lmp files and compare
-                        times
-                        against other players.</h4>
-                    <div class="d-inline-flex w-100 justify-content-center gap-2 mt-4">
-                        <a asp-controller="Account" asp-action="Register"
-                            class="d-inline-flex align-items-center justify-content-center btn btn-primary btn-lg px-4 rounded-pill"
-                            >
-                            Register
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                                class="ms-1 bi bi-person-fill-add" viewBox="0 0 16 16">
-                                <path
-                                    d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                                <path
-                                    d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z" />
-                            </svg>
-                        </a>
-                        <a asp-controller="Account" asp-action="Login"
-                            class="d-inline-flex justify-content-center align-items-center btn btn-outline-secondary btn-lg px-4 rounded-pill"
-                            >
-                            Log In
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                                class="bi ms-1 bi-door-open" viewBox="0 0 16 16">
-                                <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z" />
-                                <path
-                                    d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z" />
-                            </svg>
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <h1 class="display-5 text-center fw-bold">Welcome back, @User.Identity.Name!</h1>
 
-                    // TODO: Add quick links to user's profile, upload, etc along with info and tidbits about recent run achievements.
-                }
-            </div>
-        </div>
-    </div>
-    <!-- Recent Runs Jumbotron -->
-    <div class="col-sm-6">
-        <div class="p-3 bg-body-tertiary border rounded-3">
-            <div class="container-fluid">
-                <h2 class="border-bottom border-white mb-4">Most Recent Runs</h2>
-                <div class="card mb-3">
-                    <span
-                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary pe-2">Sonic</span>
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="/imgs/index/arid1.png" class="img-fluid  rounded-start" alt="Card title">
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body text-center">
-                                <div class="row gy-2">
-                                    <div class="col-sm-12">
-                                        <h3>Arid Canyon Zone Act 1</h3>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        Time: 1:03
-                                    </div>
-                                    <div class="col-sm-6 border-start">
-                                        By Gamer
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <span
-                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-black pe-2">Tails</span>
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="/imgs/index/gfz2.png" class="img-fluid  rounded-start" alt="Card title">
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body text-center">
-                                <div class="row gy-2">
-                                    <div class="col-sm-12">
-                                        <h3>Greenflower Zone Act 2</h3>
-                                    </div>
 
-                                    <div class="col-sm-6">
-                                        Time: 32.043
-                                    </div>
-                                    <div class="col-sm-6 border-start">
-                                        By Gamer2
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+@if (!User.Identity.IsAuthenticated)
+{
+    <div class="row flex-row-reverse align-items-center gx-5 my-auto">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade shadow-lg" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- Carousel items -->
+                    <div class="carousel-item active" data-bs-interval="2000">
+                        <img src="imgs/index-carousel/1.gif" class="d-block w-100" alt="...">
                     </div>
-                </div>
-                <div class="card mb-3">
-                    <span
-                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-black pe-2">RSonic</span>
-                    <div class="row g-0">
-                        <div class="col-4">
-                            <img src="/imgs/index/castle1.png" class="img-fluid  rounded-start" alt="Card title">
-                        </div>
-                        <div class="col-8">
-                            <div class="card-body text-center">
-                                <div class="row gy-2">
-                                    <div class="col-sm-12">
-                                        <h3>Castle Eggman Zone Act 1</h3>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        Time: 1:03
-                                    </div>
-                                    <div class="col-sm-6 border-start">
-                                        By Gamer3
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="imgs/index-carousel/2.gif" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item" data-bs-interval="2000">
+                        <img src="imgs/index-carousel/3.gif" class="d-block w-100" alt="...">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Recent Events Jumbotron -->
-    <div class="col-sm-6">
-        <div class="p-3 mb-4 bg-body-tertiary rounded-3 border">
-            <div class="container-fluid">
-                <h2 class="border-bottom border-white mb-4">Most Recent Cool Things</h2>
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-sm-2">
-                            <img src="/imgs/icons/user.png" class="rounded-image rounded-start img-fluid">
-                        </div>
-                        <div class="col-sm-10 d-flex align-items-center justify-content-center">
-                          <h4>Lemin just posted their first run!</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-sm-2">
-                            <img src="/imgs/icons/user.png" class="rounded-image rounded-start img-fluid">
-                        </div>
-                        <div class="col-sm-10 d-flex align-items-center justify-content-center">
-                            <h4>Lemin just got a PB in Jade Coast Act 1!</h4>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-lg-6 text-center text-lg-start">
+            <h1 class="display-2 fw-bold lh-1 mb-3">RoboRecords</h1>
+            <p class="lead text-light">Welcome to RoboRecords, your premier destination for SRB2 speedrunning. Here you can upload your .lmp files, compare times, and join a community of dedicated speedrunners.</p>
+            <div class="pt-3">
+                <a  class="btn btn-lg btn-primary me-2">Register</a>
+                <a href="#" class="btn btn-lg btn-outline-light">Log In</a>
             </div>
         </div>
     </div>
-</div>
+}
+else
+{
+    <h1 class="display-5 text-center fw-bold">Welcome back, @User.Identity.Name!</h1>
+
+    // TODO: Add quick links to user's profile, upload, etc along with info and tidbits about recent run achievements.
+}

@@ -1,19 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 // Variables
+$text-color: #ffffff;
+$text-color: #E6E6E6; // Soft white for better readability
+$background-color: #0D0F1A; // Deep navy blue background
+$primary-color: #5372F0; // Brighter, more vivid blue for primary elements
+$secondary-color: #6C7BBA; // Softer secondary blue for a more subtle contrast and depth
+$accent-color: #FFC107; // A gold hue for a premium feel and better visibility for CTA or highlights
 
 
-// Global Styling
-
-html {
-  font-size: 14px;
-  height:100%;
+// General Styling
+body {
+  font-family: 'Inter', Ubuntu,  sans-serif;
+  background-color: $background-color;
+  color: $text-color;
+  margin: 0;
+  padding: 0;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
+.bg-footer {
+    background-color: $secondary-color;
+}
+
+
+.btn-primary {
+  background-color: $primary-color;
+  border: none;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
   }
 }
 
-// Home page
+.btn-outline-light {
+  border-color: $secondary-color;
+  color: $secondary-color;
 
+  &:hover {
+    background-color: $secondary-color;
+    color: $background-color;
+  }
+}
 
