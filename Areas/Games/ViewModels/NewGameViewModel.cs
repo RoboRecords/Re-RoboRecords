@@ -34,7 +34,7 @@ public class NewGameViewModel
     /// </summary>
     [Required]
     [Display(Name = "Version")]
-    public string GameVersion { get; set; }
+    public float GameVersion { get; set; }
     
         
     /// <summary>

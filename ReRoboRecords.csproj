@@ -47,6 +47,7 @@
   <ItemGroup>
     <Folder Include="Areas\Games\Services\" />
     <Folder Include="Areas\Home\" />
+    <Folder Include="Enums\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

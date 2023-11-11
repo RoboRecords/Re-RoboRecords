@@ -25,6 +25,11 @@ namespace ReRoboRecords.Areas.Games.Models
         public string? GameImagePath { get; set; }
         
         /// <summary>
+        /// Version of the Game. Should be in the format of X.X. 2.2 or 2.1.
+        /// </summary>
+        public float GameVersion { get; set; }
+        
+        /// <summary>
         /// Description of the Game.
         /// </summary>
         public string Description { get; set;}

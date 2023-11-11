@@ -32,7 +32,11 @@ namespace ReRoboRecords.Areas.Games.Controllers
         [Route("~/[area]")]
         public IActionResult Index()
         {
-            return View(); // Returns the Index view.   
+            var model = new SearchGamesViewModel
+            {
+                Games = _gameRepository.GetAllGamesAsync().Result.ToList()
+            };
+            return View(model); // Returns the Index view.   
         }
         
         
@@ -55,13 +59,12 @@ namespace ReRoboRecords.Areas.Games.Controllers
                 {
                     var fileName = Guid.NewGuid() + "-" + model.GameImage.FileName;
                     var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "uploads", fileName);
-                    
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    imagePath = "uploads/" + fileName;
+                    await using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         await model.GameImage.CopyToAsync(stream);
                     }
 
-                    imagePath = filePath;
                 }
 
                 var game = new Game
@@ -69,12 +72,13 @@ namespace ReRoboRecords.Areas.Games.Controllers
                     Title = model.Title,
                     Description = model.Description,
                     ReleaseDate = model.ReleaseDate,
+                    GameVersion = model.GameVersion, 
                     GameImagePath = imagePath
                 };
                 
                 await _gameRepository.AddGameAsync(game);
                 
-                return View("Index"); // Goes back to index view if successful.
+                return RedirectToAction("Index"); // Goes back to index view if successful.
 
             }
 
