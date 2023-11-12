@@ -24,6 +24,11 @@ namespace ReRoboRecords.Areas.Games.Data
         {
             return await _context.Games.FirstOrDefaultAsync(g => g.GameId == gameId);
         }
+        
+        public async Task<Game> GetGameByNameAsync(string gameName)
+        {
+            return await _context.Games.FirstOrDefaultAsync(g => g.Title == gameName);
+        }
 
         public async Task<Game> AddGameAsync(Game game)
         {

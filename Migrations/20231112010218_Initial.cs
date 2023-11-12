@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ReRoboRecords.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateIdentitySchema : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -49,6 +49,24 @@ namespace ReRoboRecords.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    GameId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Title = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    GameImagePath = table.Column<string>(type: "text", nullable: false),
+                    GameVersion = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true),
+                    ReleaseDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsPrivate = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.GameId);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,6 +175,121 @@ namespace ReRoboRecords.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    CategoryId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                    table.ForeignKey(
+                        name: "FK_Categories_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "GameId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Characters",
+                columns: table => new
+                {
+                    CharacterId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Characters", x => x.CharacterId);
+                    table.ForeignKey(
+                        name: "FK_Characters_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "GameId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Levels",
+                columns: table => new
+                {
+                    LevelId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false),
+                    Order = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Levels", x => x.LevelId);
+                    table.ForeignKey(
+                        name: "FK_Levels_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "GameId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Runs",
+                columns: table => new
+                {
+                    RunId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Time = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    CharacterId = table.Column<int>(type: "integer", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: false),
+                    Comment = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    CategoryId = table.Column<int>(type: "integer", nullable: false),
+                    DateSubmitted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false),
+                    LevelId = table.Column<int>(type: "integer", nullable: false),
+                    VideoUrl = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Runs", x => x.RunId);
+                    table.ForeignKey(
+                        name: "FK_Runs_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Runs_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Runs_Characters_CharacterId",
+                        column: x => x.CharacterId,
+                        principalTable: "Characters",
+                        principalColumn: "CharacterId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Runs_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "GameId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Runs_Levels_LevelId",
+                        column: x => x.LevelId,
+                        principalTable: "Levels",
+                        principalColumn: "LevelId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -193,6 +326,52 @@ namespace ReRoboRecords.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_GameId",
+                table: "Categories",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categories_Name_GameId",
+                table: "Categories",
+                columns: new[] { "Name", "GameId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Characters_GameId",
+                table: "Characters",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Levels_GameId",
+                table: "Levels",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Runs_CategoryId",
+                table: "Runs",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Runs_CharacterId",
+                table: "Runs",
+                column: "CharacterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Runs_GameId",
+                table: "Runs",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Runs_LevelId",
+                table: "Runs",
+                column: "LevelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Runs_UserId",
+                table: "Runs",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -214,10 +393,25 @@ namespace ReRoboRecords.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Runs");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Characters");
+
+            migrationBuilder.DropTable(
+                name: "Levels");
+
+            migrationBuilder.DropTable(
+                name: "Games");
         }
     }
 }

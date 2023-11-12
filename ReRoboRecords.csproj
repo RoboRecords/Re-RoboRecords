@@ -46,8 +46,9 @@
 
   <ItemGroup>
     <Folder Include="Areas\Games\Services\" />
-    <Folder Include="Areas\Home\" />
+    <Folder Include="Areas\Leaderboards\Services\" />
     <Folder Include="Enums\" />
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

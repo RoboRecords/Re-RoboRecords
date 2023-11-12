@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ReRoboRecords.Areas.Account.Services;
 using ReRoboRecords.Areas.Games.Data;
+using ReRoboRecords.Areas.Leaderboards.Data;
+using ReRoboRecords.Areas.Leaderboards.Interfaces;
 using ReRoboRecords.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,9 +20,13 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IRunRepository, RunRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ILevelRepository, LevelRepository>();
+builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<AccountService>();
 var app = builder.Build();
-
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

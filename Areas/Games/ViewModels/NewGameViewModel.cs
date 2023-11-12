@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using ReRoboRecords.Areas.Games.Models;
+using ReRoboRecords.Areas.Leaderboards.Models;
 
 namespace ReRoboRecords.Areas.Games.ViewModels;
 
@@ -23,7 +24,7 @@ public class NewGameViewModel
     /// Release date of the Game.
     /// </summary>
     [Required]
-    public string? ReleaseDate { get; set; }
+    public DateTime ReleaseDate { get; set; }
     
     /// <summary>
     /// Image of the game.
@@ -35,7 +36,7 @@ public class NewGameViewModel
     /// </summary>
     [Required]
     [Display(Name = "Version")]
-    public float GameVersion { get; set; }
+    public string GameVersion { get; set; }
     
         
     /// <summary>
