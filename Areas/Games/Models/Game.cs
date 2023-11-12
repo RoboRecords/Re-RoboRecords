@@ -14,8 +14,9 @@ namespace ReRoboRecords.Areas.Games.Models
 
         [Required]
         [StringLength(255)]
-        public string Title { get; set; } // Name of the Game
-
+        public string GameName { get; set; } // Name of the Game
+        
+        public string GameAcronym { get; set; }
         public string GameImagePath { get; set; } // Path of the image for the game
 
         [Required]
@@ -33,14 +34,6 @@ namespace ReRoboRecords.Areas.Games.Models
         public virtual ICollection<Character> Characters { get; set; } // Collection of characters associated with this game
         public virtual ICollection<Run> Runs { get; set; } // Collection of runs associated with this game
         public virtual ICollection<Category> Categories { get; set; } // Collection of categories associated with this game
-
-        // Constructor to initialize the collections
-        public Game()
-        {
-            Levels = new HashSet<Level>();
-            Characters = new HashSet<Character>();
-            Runs = new HashSet<Run>();
-            Categories = new HashSet<Category>();
-        }
+        
     }
 }

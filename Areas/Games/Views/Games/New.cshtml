@@ -15,8 +15,13 @@
                         <form method="post" enctype="multipart/form-data">
                             <!-- Game Title -->
                             <div class="mb-3">
-                                <label asp-for="Title" class="form-label">Game Title</label>
-                                <input type="text" asp-for="Title" class="form-control" id="gameTitle" placeholder="Enter game title">
+                                <label asp-for="GameName" class="form-label">Game Title</label>
+                                <input type="text" asp-for="GameName" class="form-control" id="gameTitle" placeholder="Enter game title">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label asp-for="GameAcronym" class="form-label">Game Acronym (Example: MRCE, SRB2, etc)</label>
+                                <input type="text" asp-for="GameAcronym" class="form-control" id="gameAcronym" placeholder="Enter game acronym">
                             </div>
 
                             <!-- Game Description -->

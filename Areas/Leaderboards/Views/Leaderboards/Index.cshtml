@@ -1,1 +1,72 @@
-<h2>title</h2>
+@Model LeaderboardsViewModel
+
+<div id="reactLeaderboard"></div>
+
+
+
+@section Scripts {
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@@babel/standalone@7/babel.min.js"></script>
+    
+        
+   <script type="text/babel">
+     function Leaderboard() {
+       // State hooks for runs and categories
+       const [runs, setRuns] = React.useState([]);
+       const [categories, setCategories] = React.useState([]);
+   
+       // Effect hook to fetch data on component mount
+       React.useEffect(() => {
+         // Replace with actual API calls
+         async function fetchLeaderboardData() {
+           // This is placeholder data
+           setRuns([{ runId: 1, playerName: 'Player 1', time: '00:01:23', characterName: 'Character A', levelName: 'Level 1', dateSubmitted: '2021-01-01' }]);
+           setCategories([{ categoryId: 1, name: 'Category A' }]);
+         }
+   
+         fetchLeaderboardData();
+       }, []);
+   
+       return (
+         <div>
+           <h2>Leaderboard</h2>
+           <div>
+             <h3>Categories</h3>
+             {categories.map((category) => (
+               <div key={category.categoryId}>{category.name}</div>
+             ))}
+           </div>
+           <div>
+             <h3>Runs</h3>
+             <table>
+               <thead>
+                 <tr>
+                   <th>Player</th>
+                   <th>Time</th>
+                   <th>Character</th>
+                   <th>Level</th>
+                   <th>Date</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 {runs.map((run) => (
+                   <tr key={run.runId}>
+                     <td>{run.playerName}</td>
+                     <td>{run.time}</td>
+                     <td>{run.characterName}</td>
+                     <td>{run.levelName}</td>
+                     <td>{new Date(run.dateSubmitted).toLocaleDateString()}</td>
+                   </tr>
+                 ))}
+               </tbody>
+             </table>
+           </div>
+         </div>
+       );
+     }
+   
+     // Render the component to the DOM
+     ReactDOM.render(<Leaderboard />, document.getElementById('reactLeaderboard'));
+   </script>
+}

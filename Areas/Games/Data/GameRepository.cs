@@ -27,7 +27,7 @@ namespace ReRoboRecords.Areas.Games.Data
         
         public async Task<Game> GetGameByNameAsync(string gameName)
         {
-            return await _context.Games.FirstOrDefaultAsync(g => g.Title == gameName);
+            return await _context.Games.FirstOrDefaultAsync(g => g.GameName == gameName);
         }
 
         public async Task<Game> AddGameAsync(Game game)
@@ -42,7 +42,7 @@ namespace ReRoboRecords.Areas.Games.Data
             var gameToUpdate = await _context.Games.FirstOrDefaultAsync(g => g.GameId == game.GameId);
             if (gameToUpdate != null)
             {
-                gameToUpdate.Title = game.Title;
+                gameToUpdate.GameName = game.GameName;
                 gameToUpdate.Description = game.Description;
 
 

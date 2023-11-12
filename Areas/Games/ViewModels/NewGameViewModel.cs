@@ -11,8 +11,14 @@ public class NewGameViewModel
     /// </summary>
     [Required]
     [MaxLength(255)]
-    [Display (Name = "Game Name")]
-    public string Title { get; set; }
+    public string GameName { get; set; }
+    /// <summary>
+    ///  Acronym of the Game. 
+    /// </summary>
+    /// <example>
+    /// SRB2, SUGOI, MRCE, etc.
+    /// </example>
+    public string GameAcronym { get; set; }
         
     /// <summary>
     /// Description of the Game.

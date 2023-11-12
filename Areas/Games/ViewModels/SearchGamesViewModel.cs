@@ -4,8 +4,14 @@ namespace ReRoboRecords.Areas.Games.ViewModels;
 
 public class SearchGamesViewModel
 {
-    public List<Game> Games { get; set; }
+    public SearchGamesViewModel(List<DisplayGameViewModel>? games, string? searchQuery)
+    {
+        Games = games;
+        SearchQuery = searchQuery;
+    }
+
+    public List<DisplayGameViewModel> Games { get; set; }
     
-    public string GameName { get; set; }
+    public string SearchQuery { get; set; }
     
 }

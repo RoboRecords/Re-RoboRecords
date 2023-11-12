@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReRoboRecords.Data;
@@ -11,9 +12,11 @@ using ReRoboRecords.Data;
 namespace ReRoboRecords.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231112112940_AddMoreStuff")]
+    partial class AddMoreStuff
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,10 +237,6 @@ namespace ReRoboRecords.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
-                    b.Property<string>("GameAcronym")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("GameImagePath")
                         .IsRequired()
                         .HasColumnType("text");
@@ -253,6 +252,10 @@ namespace ReRoboRecords.Migrations
 
                     b.Property<bool>("IsPrivate")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("NormalizedGameName")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("timestamp with time zone");
