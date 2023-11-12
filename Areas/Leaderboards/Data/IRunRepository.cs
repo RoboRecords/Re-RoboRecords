@@ -85,7 +85,7 @@ namespace ReRoboRecords.Areas.Leaderboards.Data
         Task<IEnumerable<Run>> GetRunsByCategoryIdAndLevelIdAsync(int categoryId, int levelId);
 
         /// <summary>
-        /// Get all runs for a given category and character
+        /// Get all runs for a given category and player
         /// </summary>
         /// <param name="categoryId">
         /// The id of the category to retrieve runs for
@@ -99,7 +99,7 @@ namespace ReRoboRecords.Areas.Leaderboards.Data
         Task<IEnumerable<Run>> GetRunsByCategoryIdAndPlayerIdAsync(int categoryId, string playerId);
 
         /// <summary>
-        ///  Get all runs for a given category and player
+        ///  Get all runs for a given category and game
         /// </summary>
         /// <param name="categoryId">
         /// The id of the category to retrieve runs for
