@@ -1,72 +1,55 @@
-@Model LeaderboardsViewModel
+@model LeaderboardViewModel
+@{
+    ViewData["Title"] = "Leaderboard";
+}
 
-<div id="reactLeaderboard"></div>
+<div class="container my-5">
+    <h1 class="mb-3 text-center">@Model.GameName Leaderboard</h1>
 
+    <div class="d-flex flex-wrap justify-content-center mb-4">
+        @foreach (var category in Model.Categories)
+        {
+            <button type="button"
+                    class="btn btn-secondary m-1"
+                    onclick="loadRuns('@category.CategoryId')">
+                @category.Name
+            </button>
+        }
+    </div>
 
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Player</th>
+                    <th scope="col" onclick="sortTable('time')">Time</th>
+                    <th scope="col">Character</th>
+                    <th scope="col">Level</th>
+                    <th scope="col" onclick="sortTable('date')">Date Submitted</th>
+                    <th scope="col">Video</th>
+                </tr>
+            </thead>
+            <tbody id="runs-body">
+                @foreach (var run in Model.Runs)
+                {
+                    <tr>
+                        <td>@run.Username   </td>
+                        <td>@run.Time</td>
+                        <td>@run.CharacterName</td>
+                        <td>@run.LevelName</td>
+                        <td>@run.DateSubmitted.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(run.VideoUrl))
+                            {
+                                <a href="@run.VideoUrl" target="_blank" class="btn btn-primary btn-sm">Watch</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
-    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@@babel/standalone@7/babel.min.js"></script>
-    
-        
-   <script type="text/babel">
-     function Leaderboard() {
-       // State hooks for runs and categories
-       const [runs, setRuns] = React.useState([]);
-       const [categories, setCategories] = React.useState([]);
-   
-       // Effect hook to fetch data on component mount
-       React.useEffect(() => {
-         // Replace with actual API calls
-         async function fetchLeaderboardData() {
-           // This is placeholder data
-           setRuns([{ runId: 1, playerName: 'Player 1', time: '00:01:23', characterName: 'Character A', levelName: 'Level 1', dateSubmitted: '2021-01-01' }]);
-           setCategories([{ categoryId: 1, name: 'Category A' }]);
-         }
-   
-         fetchLeaderboardData();
-       }, []);
-   
-       return (
-         <div>
-           <h2>Leaderboard</h2>
-           <div>
-             <h3>Categories</h3>
-             {categories.map((category) => (
-               <div key={category.categoryId}>{category.name}</div>
-             ))}
-           </div>
-           <div>
-             <h3>Runs</h3>
-             <table>
-               <thead>
-                 <tr>
-                   <th>Player</th>
-                   <th>Time</th>
-                   <th>Character</th>
-                   <th>Level</th>
-                   <th>Date</th>
-                 </tr>
-               </thead>
-               <tbody>
-                 {runs.map((run) => (
-                   <tr key={run.runId}>
-                     <td>{run.playerName}</td>
-                     <td>{run.time}</td>
-                     <td>{run.characterName}</td>
-                     <td>{run.levelName}</td>
-                     <td>{new Date(run.dateSubmitted).toLocaleDateString()}</td>
-                   </tr>
-                 ))}
-               </tbody>
-             </table>
-           </div>
-         </div>
-       );
-     }
-   
-     // Render the component to the DOM
-     ReactDOM.render(<Leaderboard />, document.getElementById('reactLeaderboard'));
-   </script>
-}
+<script src="dist/bundle.js"></script>}

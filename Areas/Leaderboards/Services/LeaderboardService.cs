@@ -2,6 +2,7 @@ using AutoMapper;
 using ReRoboRecords.Areas.Games.Data;
 using ReRoboRecords.Areas.Leaderboards.Data;
 using ReRoboRecords.Areas.Leaderboards.Interfaces;
+using ReRoboRecords.Areas.Leaderboards.Models;
 using ReRoboRecords.Areas.Leaderboards.ViewModels;
 
 namespace ReRoboRecords.Areas.Leaderboards.Services;
@@ -24,6 +25,12 @@ public class LeaderboardService : ILeaderboardService
         _runRepository = runRepository;
         _categoryRepository = categoryRepository;
         _mapper = mapper;
+    }
+    
+    public async Task<IEnumerable<Run>> GetAllRunsForGameAsync(string gameName)
+    {
+        var game = await _gameRepository.GetGameByNameAsync(gameName);
+        return await _runRepository.GetRunsByGameIdAsync(game.GameId);
     }
 
     public async Task<LeaderboardViewModel> GetViewModelAsync(string gameName)

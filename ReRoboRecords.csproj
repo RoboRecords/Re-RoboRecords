@@ -51,4 +51,8 @@
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="package-lock.json" />
+  </ItemGroup>
+
 </Project>
