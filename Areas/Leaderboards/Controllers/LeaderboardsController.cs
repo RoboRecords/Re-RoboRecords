@@ -55,7 +55,6 @@ public class LeaderboardsController : Controller
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error getting runs for game {gameName}", gameName);
             return Json(new { error = $"An error occurred getting runs for {gameName}",gameName });
         }
     }
