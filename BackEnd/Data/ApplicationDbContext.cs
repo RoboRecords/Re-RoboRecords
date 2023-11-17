@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using BackEnd.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -54,4 +55,19 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
             .HasIndex(c => new { c.Name, c.GameId })
             .IsUnique();
     }
+    // Serverside Validation
+    public override int SaveChanges()
+    {
+        var entities = ChangeTracker.Entries()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+
+        foreach (var entity in entities)
+        {
+            var validationContext = new ValidationContext(entity.Entity);
+            Validator.ValidateObject(entity.Entity, validationContext, validateAllProperties: true);
+        }
+
+        return base.SaveChanges();
+    }
+
 }
