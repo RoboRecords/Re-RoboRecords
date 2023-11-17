@@ -1,43 +1,42 @@
-﻿    <nav class="navbar navbar-expand-lg bg-gradient border-bottom">
-        <div class="container">
-            <!-- Brand/logo -->
-            <a class="navbar-brand align-items-center d-flex fs-3" href="">
-                <img src="imgs/icons/time-emblem.png" alt="Logo" class="me-1">
-                RoboRecords
-            </a>
+﻿<nav class="navbar navbar-expand-lg bg-gradient border-bottom">
+    <div class="container">
+        <!-- Brand/logo -->
+        <NavLink class="navbar-brand align-items-center d-flex fs-3" href="/" Match="NavLinkMatch.All">
+            <img src="imgs/icons/time-emblem.png" alt="Logo" class="me-1">
+            RoboRecords
+        </NavLink>
 
-            <!-- Toggler/collapsible Button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarTogglerDemo" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <!-- Toggler/collapsible Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarTogglerDemo" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="navbarToggler">
-                <ul class="navbar-nav align-items-center justify-content-center w-100">
-                    <div class="d-flex flex-row gap-2 ">
-                        <li class="nav-item">
-                            <a class="nav-link fs-5" asp-area="Games" asp-controller="Games" asp-action="Index">
-                                <i class="bi bi-joystick me-1"></i>
-                                Games
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5" href="#">
-                                <i class="bi bi-award-fill me-1"></i>
-                                Emblems
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fs-5" href="#">
-                                <i class="bi bi-people-fill me-1"></i>
-                                Users
-                            </a>
-                        </li>
-                    </div>
-                    <SearchNavItem></SearchNavItem>
-                    <LoginNavItem></LoginNavItem>
-                </ul>
-            </div>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav align-items-center justify-content-center w-100">
+                <div class="d-flex flex-row gap-2 ">
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" asp-area="Games" asp-controller="Games" asp-action="Index">
+                            <i class="bi bi-joystick me-1"></i>
+                            Games
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="#">
+                            <i class="bi bi-award-fill me-1"></i>
+                            Emblems
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fs-5" href="#">
+                            <i class="bi bi-people-fill me-1"></i>
+                            Users
+                        </a>
+                    </li>
+                </div>
+                <SearchNavItem></SearchNavItem>
+                <LoginNavItem></LoginNavItem>
+            </ul>
         </div>
-    </nav>
-
+    </div>
+</nav>

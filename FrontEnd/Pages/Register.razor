@@ -1,0 +1,69 @@
+@page "/register"
+@using FrontEnd.Models
+@using System.Net.Http;
+@inject IConfiguration Configuration
+@inject HttpClient Http;
+@inject NavigationManager NavigationManager
+
+<div class="d-flex justify-content-center align-items-center w-100">
+    <div class="card shadow-lg w-100" style="max-width: 500px; min-height:120px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Create Account</h3>
+            <EditForm Model="registerModel" OnValidSubmit="HandleRegister">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-envelope-fill" alt="Email" style="width: 20px;"></i> 
+                        </span>
+                        <InputText @bind-Value="registerModel.Email" class="form-control" placeholder="Email Address" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-person-fill" alt="User" style="width: 20px;"></i> 
+                        </span>
+                        <InputText @bind-Value="registerModel.Username" class="form-control" placeholder="Username" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-lock-fill" alt="Password" style="width: 20px;"></i> 
+                        </span>
+                        <InputText @bind-Value="registerModel.Password" type="password" class="form-control" placeholder="Password" />
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-lock-fill" alt="Confirm Password" style="width: 20px;"></i> 
+                        </span>
+                        <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Register</button>
+            </EditForm>
+            <div class="text-center mt-3">
+                <small>Already have an account? <a href="#">Sign in</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private RegisterModel registerModel = new RegisterModel();
+
+    private async Task HandleRegister()
+    {
+        var response = await Http.PostAsJsonAsync(Configuration["ApiSettings:ApiUrl"] + "/account/register", registerModel);
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/");
+        }
+        else
+        {
+            Console.WriteLine(response.StatusCode);
+        }
+    }
+}

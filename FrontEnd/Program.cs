@@ -4,14 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-//
-// builder.Services.AddHttpClient<WeatherForecastClient>(c =>
-// {
-//     var url = builder.Configuration["WEATHER_URL"] 
-//         ?? throw new InvalidOperationException("WEATHER_URL is not set");
-//
-//     c.BaseAddress = new(url);
-// });
+builder.Services.AddScoped<HttpClient>();
 
 var app = builder.Build();
 
