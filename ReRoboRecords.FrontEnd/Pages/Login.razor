@@ -1,6 +1,62 @@
-@page "/Login"
-<h3>Login</h3>
+@page "/login"
+@using ReRoboRecords.FrontEnd.Services
+@using ReRoboRecords.Shared
+@inject AuthService AuthService
+@inject NavigationManager NavigationManager
 
+
+<div class="d-flex justify-content-center align-items-center w-100">
+    <div class="card shadow-lg w-100" style="max-width: 500px; min-height:120px;">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Login</h3>
+            <EditForm Model="userModel" OnSubmit="@Submit"> 
+                <DataAnnotationsValidator/>
+                @if (context.GetValidationMessages().Any())
+                {
+                    <div class="alert alert-danger d-flex flex-column justify-content-center">
+                        <ul class="mb-0">
+                            <!-- Display local validation errors -->
+                            @foreach (var message in context.GetValidationMessages())
+                            {
+                                <li>@message</li>
+                            }
+                            <!-- Display server validation errors -->
+                            @* @foreach (var error in serverErrors) *@
+                            @* { *@
+                            @*     <li>@error</li> *@
+                            @* } *@
+                        </ul>
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-envelope-fill" alt="Email" style="width: 20px;"></i>
+                        </span>
+                        <InputText @bind-Value="userModel.Email" class="form-control" placeholder="Email Address"/>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-lock-fill" alt="Password" style="width: 20px;"></i>
+                        </span>
+                        <InputText @bind-Value="userModel.Password" type="password" class="form-control" placeholder="Password"/>
+                    </div>
+                </div>
+              
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
 @code {
-    
+    UserModel userModel = new UserModel();
+
+    private async void Submit()
+    {
+        await AuthService.Login(userModel.Email, userModel.Password);
+        NavigationManager.NavigateTo("/");
+    }
 }

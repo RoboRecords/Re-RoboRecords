@@ -8,8 +8,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Blazored.LocalStorage" Version="4.4.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all"/>
+        <PackageReference Include="MudBlazor" Version="6.11.1" />
+        <PackageReference Include="supabase-csharp" Version="0.13.7" />
     </ItemGroup>
 
     <ItemGroup>
@@ -29,11 +33,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AdditionalFiles Include="Pages\Error.cshtml" />
       <AdditionalFiles Include="Pages\Index.razor" />
       <AdditionalFiles Include="Pages\Login.razor" />
       <AdditionalFiles Include="Pages\Register.razor" />
-      <AdditionalFiles Include="Pages\_Host.cshtml" />
+        
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\ReRoboRecords.Shared\ReRoboRecords.Shared.csproj" />
     </ItemGroup>
 
 </Project>

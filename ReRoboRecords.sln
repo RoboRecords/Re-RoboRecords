@@ -7,6 +7,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 								EndProject
 								Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReRoboRecords.BackEnd", "ReRoboRecords.BackEnd\ReRoboRecords.BackEnd.csproj", "{EA06375C-B129-43C3-A2B0-BAF4BF606814}"
 								EndProject
+								Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReRoboRecords.Shared", "ReRoboRecords.Shared\ReRoboRecords.Shared.csproj", "{BC771120-7C69-482C-A539-3AD81EAF870D}"
+								EndProject
 								Global
 								GlobalSection(SolutionConfigurationPlatforms) = preSolution
 								Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 									{EA06375C-B129-43C3-A2B0-BAF4BF606814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 									{EA06375C-B129-43C3-A2B0-BAF4BF606814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 									{EA06375C-B129-43C3-A2B0-BAF4BF606814}.Release|Any CPU.Build.0 = Release|Any CPU
+									{BC771120-7C69-482C-A539-3AD81EAF870D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+									{BC771120-7C69-482C-A539-3AD81EAF870D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+									{BC771120-7C69-482C-A539-3AD81EAF870D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+									{BC771120-7C69-482C-A539-3AD81EAF870D}.Release|Any CPU.Build.0 = Release|Any CPU
 								EndGlobalSection
 								GlobalSection(SolutionProperties) = preSolution
 								HideSolutionNode = FALSE

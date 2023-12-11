@@ -1,19 +1,52 @@
+@using ReRoboRecords.FrontEnd.Providers
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@implements IDisposable
 
-@if (!_loggedIn)
-{
-    <div class="d-flex justify-content-center gap-2">
-        <NavLink class="nav-link fs-5" href="register">
-            <i class="bi bi-pencil-square me-1"></i>
-            Register
-        </NavLink>
-        <a class="nav-link fs-5">
-            <i class="bi bi-box-arrow-in-right me-1"></i>
-            Login
-        </a>
-    </div>
-}
- 
+
+
+    
+
+ <AuthorizeView>
+     <Authorized>
+         <div>Welcome, @context.User.Identity.Name!</div>
+     </Authorized>
+     <NotAuthorized>
+         <div class="d-flex justify-content-center gap-2">
+                 <NavLink class="nav-link fs-5" href="register">
+                     <i class="bi bi-pencil-square me-1"></i>
+                     Register
+                 </NavLink>
+                 <NavLink class="nav-link fs-5" href="login">
+                     <i class="bi bi-box-arrow-in-right me-1"></i>
+                     Login
+                 </NavLink>
+             </div>
+     </NotAuthorized>
+ </AuthorizeView>
 
 @code {
-    bool _loggedIn = false;
+    private bool isAuthenticated = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationStateProvider.AuthenticationStateChanged += HandleAuthenticationStateChange;
+    }
+
+    public void Dispose()
+    {
+        AuthenticationStateProvider.AuthenticationStateChanged -= HandleAuthenticationStateChange;
+    }
+
+    private async void HandleAuthenticationStateChange(Task<AuthenticationState> task)
+    {
+        var authState = await task;
+        var user = authState.User;
+
+        isAuthenticated = user.Identity.IsAuthenticated;
+
+        // Invoke StateHasChanged if necessary to refresh the UI
+        StateHasChanged();
+    }
+
 }
