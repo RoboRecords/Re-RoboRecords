@@ -30,7 +30,11 @@ public class AuthService
     {
         _logger.LogInformation("METHOD: Login");
         
-        var session = await _client.Auth.SignIn(email, password);
+        var session = await _client.Auth.SignIn(email, password); 
+        session.User.AppMetadata = new Dictionary<string,object>()
+        {
+            {"Display Name", "Test User"}
+        };
 
         _logger.LogInformation("------------------- User logged in -------------------");
         // logger.LogInformation($"instance.Auth.CurrentUser.Id {client?.Auth?.CurrentUser?.Id}");
@@ -38,7 +42,22 @@ public class AuthService
         
         await _customAuthStateProvider.GetAuthenticationStateAsync();
     }
-    
+
+    public async Task<string> SignUp(string email, string password)
+    {
+        _logger.LogInformation("METHOD: Sign Up");
+
+        var session = await _client.Auth.SignUp(email, password);
+
+
+        _logger.LogInformation("------------------- User Registered -------------------");
+        // logger.LogInformation($"instance.Auth.CurrentUser.Id {client?.Auth?.CurrentUser?.Id}");
+        _logger.LogInformation($"client.Auth.CurrentUser.Email {_client?.Auth?.CurrentUser?.Email}");
+
+        await _customAuthStateProvider.GetAuthenticationStateAsync();
+        return session.User.Id;
+    }
+
     public async Task Logout()
     {
         await _client.Auth.SignOut();

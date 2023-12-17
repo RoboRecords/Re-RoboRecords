@@ -15,6 +15,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+
 var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .Build();
@@ -33,8 +34,8 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthorizationCore();
 
-var url = builder.Configuration["ApiSettings:BaseUrl"];
-var key = builder.Configuration["ApiSettings:ApiKey"];
+var url = builder.Configuration["ApiSettings:ProjectUrl"];
+var key = builder.Configuration["ApiSettings:PublicApiKey"];
 
 builder.Services.AddScoped<Supabase.Client>(
     provider => new Supabase.Client(

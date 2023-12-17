@@ -9,7 +9,7 @@
     <div class="card shadow-lg w-100" style="max-width: 500px; min-height:120px;">
         <div class="card-body">
             <h3 class="card-title text-center mb-4">Login</h3>
-            <EditForm Model="userModel" OnSubmit="@Submit"> 
+            <EditForm Model="loginModel" OnSubmit="@Submit"> 
                 <DataAnnotationsValidator/>
                 @if (context.GetValidationMessages().Any())
                 {
@@ -34,7 +34,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-envelope-fill" alt="Email" style="width: 20px;"></i>
                         </span>
-                        <InputText @bind-Value="userModel.Email" class="form-control" placeholder="Email Address"/>
+                        <InputText @bind-Value="loginModel.Email" class="form-control" placeholder="Email Address"/>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -42,7 +42,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-lock-fill" alt="Password" style="width: 20px;"></i>
                         </span>
-                        <InputText @bind-Value="userModel.Password" type="password" class="form-control" placeholder="Password"/>
+                        <InputText @bind-Value="loginModel.Password" type="password" class="form-control" placeholder="Password"/>
                     </div>
                 </div>
               
@@ -52,11 +52,11 @@
     </div>
 </div>
 @code {
-    UserModel userModel = new UserModel();
+    LoginViewModel loginModel = new LoginViewModel();
 
     private async void Submit()
     {
-        await AuthService.Login(userModel.Email, userModel.Password);
+        await AuthService.Login(loginModel.Email, loginModel.Password);
         NavigationManager.NavigateTo("/");
     }
 }

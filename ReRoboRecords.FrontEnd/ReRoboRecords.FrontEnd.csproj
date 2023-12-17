@@ -12,16 +12,15 @@
         <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
         <PackageReference Include="MudBlazor" Version="6.11.1" />
         <PackageReference Include="supabase-csharp" Version="0.13.7" />
+        <PackageReference Include="System.Text.Json" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
-      </Content>
-      <Content Update="wwwroot\appsettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
 
@@ -44,5 +43,9 @@
     <ItemGroup>
         <ProjectReference Include="..\ReRoboRecords.Shared\ReRoboRecords.Shared.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+        <CompilerVisibleProperty Include="UseSystemTextJsonSourceGenerator" Value="true" />
+</ItemGroup>
 
 </Project>

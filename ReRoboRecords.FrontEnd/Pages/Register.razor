@@ -1,14 +1,20 @@
 @page "/register"
 @inject IConfiguration Configuration
-@inject HttpClient Http;
+@inject HttpClient Http
+@inject AuthService AuthService;
 @inject NavigationManager NavigationManager
-@using System.Net.Http.Json
+@using ReRoboRecords.FrontEnd.Services
+@using ReRoboRecords.Shared
+@using System.Net
+@using System.Media
+@using System.Text
+@using System.Text.Json
 
 <div class="d-flex justify-content-center align-items-center w-100">
     <div class="card shadow-lg w-100" style="max-width: 500px; min-height:120px;">
         <div class="card-body">
             <h3 class="card-title text-center mb-4">Create Account</h3>
-            <EditForm>
+            <EditForm Model="registerModel" OnSubmit="@Submit">
                 <DataAnnotationsValidator/>
                 @if (context.GetValidationMessages().Any())
                 {
@@ -33,7 +39,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-envelope-fill" alt="Email" style="width: 20px;"></i>
                         </span>
-                        @* <InputText @bind-Value="registerModel.Email" class="form-control" placeholder="Email Address"/> *@
+                        <InputText @bind-Value="registerModel.Email" class="form-control" placeholder="Email Address"/> 
                     </div>
                 </div>
                 <div class="mb-3">
@@ -41,7 +47,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-person-fill" alt="User" style="width: 20px;"></i>
                         </span>
-                        @* <InputText @bind-Value="registerModel.Username" class="form-control" placeholder="Username"/> *@
+                        <InputText @bind-Value="registerModel.Username" class="form-control" placeholder="Username"/> 
                     </div>
                 </div>
                 <div class="mb-3">
@@ -49,7 +55,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-lock-fill" alt="Password" style="width: 20px;"></i>
                         </span>
-                        @* <InputText @bind-Value="registerModel.Password" type="password" class="form-control" placeholder="Password"/> *@
+                        <InputText @bind-Value="registerModel.Password" type="password" class="form-control" placeholder="Password"/>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -57,7 +63,7 @@
                         <span class="input-group-text">
                             <i class="bi bi-lock-fill" alt="Confirm Password" style="width: 20px;"></i>
                         </span>
-                        @* <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password"/> *@
+                        <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="form-control" placeholder="Confirm Password"/>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Register</button>
@@ -70,5 +76,19 @@
 </div>
 
 @code {
-   
+    RegisterViewModel registerModel = new();
+    
+    
+    private async Task Submit()
+    {
+        var userId = await AuthService.SignUp(registerModel.Email, registerModel.Password);
+        registerModel.Id = userId;
+        Console.WriteLine(registerModel);
+        var response = await Http.PostAsJsonAsync("http://localhost:5062/api/account/register", registerModel);
+        if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception(await response.Content.ReadAsStringAsync());
+        response.EnsureSuccessStatusCode();
+        NavigationManager.NavigateTo("/");
+
+    }
+
 }
